@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/navigation_drawer_header_margin"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/modelo_descripcion_titulo"
+        android:textSize="@dimen/lv_row_text_size"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/lv_row_text_size_detail_small"
+        android:text="@string/modelo_descripcion_cant_horas"
+        android:textColor="@color/color_grey"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilyt_cant_preguntas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:helperText="@string/modelo_cant_preguntas">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_cant_preguntas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="2"
+            android:maxLines="1"
+            android:textSize="@dimen/lv_row_text_size_detail_small" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/modelo_descripcion_bloqueo"
+            android:layout_marginTop="@dimen/txt_large"
+            android:textStyle="bold"/>
+
+        <CheckBox
+            android:id="@+id/ckbBloqueo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/txt_large"
+            android:layout_marginStart="@dimen/margin_default" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lyt_seccion_bloqueo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/txt_large"
+            android:text="@string/modelo_descripcion_limite_desaprobaciones"
+            android:textColor="@color/color_grey"
+            android:textStyle="bold"
+            android:textSize="@dimen/lv_row_text_size_detail_small" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilyt_limite_desaprobaciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:helperText="@string/modelo_limite_desaprobaciones">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_limite_desaprobaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="2"
+                android:maxLines="1"
+                android:textSize="@dimen/lv_row_text_size_detail_small" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/txt_large"
+            android:text="@string/modelo_descripcion_limite_sin_respuestas"
+            android:textColor="@color/color_grey"
+            android:textStyle="bold"
+            android:textSize="@dimen/lv_row_text_size_detail_small" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilyt_sin_repuestas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:helperText="@string/modelo_sin_respuestas">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_sin_repuestas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="2"
+                android:maxLines="1"
+                android:textSize="@dimen/lv_row_text_size_detail_small" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/txt_large"
+            android:text="@string/modelo_descripcion_habilitacion_persona"
+            android:textColor="@color/color_grey"
+            android:textStyle="bold"
+            android:textSize="@dimen/lv_row_text_size_detail_small" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilyt_cant_horas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:helperText="@string/modelo_cant_horas">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_cant_horas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="2"
+                android:maxLines="1"
+                android:textSize="@dimen/lv_row_text_size_detail_small" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_registrar_modelo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/txt_big"
+        android:background="@drawable/button_ripple"
+        android:paddingStart="@dimen/txt_big"
+        android:paddingEnd="@dimen/txt_big"
+        android:text="@string/btn_description_registrar"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/txt_large" />
+</LinearLayout>

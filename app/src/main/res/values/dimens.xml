@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_default">4dp</dimen>
+    <dimen name="margin_default_top">8dp</dimen>
+
+    <dimen name="lv_row_padding">5dp</dimen>
+    <dimen name="lv_row_text_size">20sp</dimen>
+    <dimen name="lv_row_text_size_detail">14sp</dimen>
+    <dimen name="lv_row_text_size_detail_small">12sp</dimen>
+    <dimen name="lv_row_text_size_detail_xsmall">10sp</dimen>
+    <dimen name="lv_row_icon_width">50dp</dimen>
+    <dimen name="lv_row_icon_padding">5dp</dimen>
+
+    <dimen name="txt_big">28sp</dimen>
+    <dimen name="txt_large">18sp</dimen>
+    <dimen name="txt_medium">17sp</dimen>
+    <dimen name="txt_small">16sp</dimen>
+    <dimen name="txt_xsmall">15sp</dimen>
+
+    <bool name="fitsSystemWindows">true</bool>
+    <dimen name="navigation_drawer_header_margin">16dp</dimen>
+    <dimen name="status_bar_kitkat_height">0dp</dimen>
+    <dimen name="status_bar_lollipop_height">0dp</dimen>
+    <dimen name="status_bar_margin_top">0dp</dimen>
+    <dimen name="app_bar_height">190dp</dimen>
+    <dimen name="header_view_start_margin_left">16dp</dimen>
+    <dimen name="header_view_end_margin_left">40dp</dimen>
+    <dimen name="header_view_start_margin_bottom">14dp</dimen>
+    <dimen name="header_view_end_margin_right">14dp</dimen>
+</resources>

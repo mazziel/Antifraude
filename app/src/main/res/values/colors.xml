@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#035CAE</color>
+    <color name="colorPrimaryDark">#005293</color>
+    <color name="colorAccent">#051450</color>
+    <color name="btn_txt">#FFFFFF</color>
+    <color name="primary_text">@android:color/black</color>
+    <color name="color_orange">#FF6702</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="edt_bg">#FCFCFC</color>
+    <color name="edt_br">#E5E5E5</color>
+    <color name="check_unpressed">#ACACAC</color>
+    <color name="color_indigo">#403f51b5</color>
+    <color name="color_grey">#545454</color>
+    <color name="color_green">#00c851</color>
+    <color name="colo_green_1">#00C851</color>
+    <color name="colo_green_2">#00bd40</color>
+    <color name="color_red">#ff3547</color>
+    <color name="colo_red_1">#FF3547</color>
+    <color name="colo_red_2">#960018</color>
+    <color name="color_light_blue">#eaf1f9</color>
+    <color name="color_control_normal">#FF5800</color> <!--Cambio de color de el placeholder de los editText-->
+    <color name="color_control_highlight">#7F000000</color> <!--color del ripple de los botones-->
+    <color name="login_text_color_hint">#6B6B6B</color>
+    <color name="login_color_control_activated">@color/colorAccent</color>
+
+    <!--Colores Textos de los items-->
+    <color name="color_texto_detalle">#545454</color>
+    <color name="color_texto_codigo">#545454</color>
+    <color name="color_texto_nombre">#FF5800</color>
+
+    <!--TOAST COLORS-->
+    <color name="bg_mensaje_confirmacion_correcto">#0154a0</color>
+    <color name="bg_mensaje_confirmacion_incorrecto">#e51b1e</color>
+    <color name="btn_mensaje_confirmacion_correcto">#75f0f3f8</color>
+
+    <!--Colores menu lateral-->
+    <color name="color_text_items_menu">#545454</color>
+    <color name="color_grey_1">#DBDBDB</color>
+    <color name="color_grey_2">#919191</color>
+    <color name="color_black">#000000</color>
+</resources>

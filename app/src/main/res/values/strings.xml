@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">AntiFraude</string>
+    <string name="db_name">BD_AntiFraude</string>
+    <string name="keyexportbd_password">1234567890</string>
+    <string name="text_iniciando_session_fuera_de_cobertura">Iniciando sesión off line</string>
+    <string name="login_usuario">Usuario</string>
+    <string name="login_hint_usuario">Ingresar usuario</string>
+    <string name="login_clave">Clave</string>
+    <string name="login_hint_clave">Ingresar clave</string>
+    <string name="menu_hint_name">Luka Regina</string>
+    <string name="menu_content_description">Perfil</string>
+    <string name="login_description_btn_iniciar">Ingresar</string>
+    <string name="menu_hint_lastname">Mandoka de los Kiddos</string>
+    <string name="menu_hint_email">troyesivan@gmail.com</string>
+    <string name="menu_titulo">Menú</string>
+    <string name="alert_dialog_cerrar_sesion_title">¿Desea salir de la aplicación?</string>
+    <string name="text_fuera_de_cobertura">Fuera de Cobertura</string>
+    <string name="btn_description_registrar">Registrar</string>
+    <string name="modelo_descripcion_cant_horas">La cantidad de preguntas en el cuestionario será de:</string>
+    <string name="modelo_descripcion_bloqueo">Bloqueo de Personas</string>
+    <string name="modelo_descripcion_limite_desaprobaciones">Límite de preguntas desaprobadas:</string>
+    <string name="modelo_descripcion_limite_sin_respuestas">Límite de preguntas sin respuestas:</string>
+    <string name="modelo_descripcion_habilitacion_persona">Habilitar persona pasada la cantidad de horas:</string>
+    <string name="modelo_hint">1</string>
+    <string name="modelo_descripcion_titulo">Cuestionario</string>
+    <string name="modelo_number">number</string>
+    <string name="modelo_title">Administración de Modelo</string>
+    <string name="adm_pregunta_title">Administración de Preguntas</string>
+    <string name="pregunta_descripcion_titulo">Preguntas para modelo:</string>
+    <string name="pregunta_sin_resultados">No se encontraron resultados</string>
+    <string name="modelo_cant_horas">Ingrese un valor de 1 a 24</string>
+    <string name="modelo_sin_respuestas">Ingrese un valo de 1 a 8</string>
+    <string name="modelo_limite_desaprobaciones">Ingrese un valor de 1 a 8</string>
+    <string name="modelo_cant_preguntas">Ingrese un valor de 1 a 8</string>
+    <string name="text_validando_usuario">Validando Usuario...</string>
+    <string name="text_obteniendo_adm_modelo">Obteniendo configuración de Modelo</string>
+</resources>

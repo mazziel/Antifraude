@@ -1,0 +1,29 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pe.af.android.data" >
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name="com.orm.SugarApp"
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true">
+
+        <meta-data
+            android:name="DATABASE"
+            android:value="@string/db_name" />
+
+        <meta-data
+            android:name="VERSION"
+            android:value="@string/db_version" />
+
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="com.pe.af.android.data" />
+
+    </application>
+</manifest>
