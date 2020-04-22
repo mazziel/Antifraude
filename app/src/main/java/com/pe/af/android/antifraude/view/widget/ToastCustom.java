@@ -68,7 +68,7 @@ public class ToastCustom extends Toast {
             llToastCustom.setCardBackgroundColor(loToastCustomView.getResources().getColor(R.color.bg_mensaje_confirmacion_correcto));
         }else if (poTipoMensaje == TYPE_INFO){
             loImgInformacion.setVisibility(View.VISIBLE);
-            llToastCustom.setCardBackgroundColor(loToastCustomView.getResources().getColor(R.color.bg_mensaje_confirmacion_correcto));
+            llToastCustom.setCardBackgroundColor(loToastCustomView.getResources().getColor(R.color.bg_mensaje_confirmacion_info));
         }else{
             loImgError.setVisibility(View.VISIBLE);
             llToastCustom.setCardBackgroundColor(loToastCustomView.getResources().getColor(R.color.bg_mensaje_confirmacion_incorrecto));

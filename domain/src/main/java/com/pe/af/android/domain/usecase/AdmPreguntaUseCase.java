@@ -60,6 +60,7 @@ public class AdmPreguntaUseCase implements IAdmPreguntaUseCase {
             @Override
             public void onEnviado(String mensaje) {
                 List<AdmPregunta> list = obtenerListAdmPregunta();
+                admPreguntaRepository.eliminarAdmPregunta();
                 for (AdmPregunta itemm: list) {
                     itemm.setSeleccionada(false);
                     for (int id: request.getPreguntasSeleccionadas()) {

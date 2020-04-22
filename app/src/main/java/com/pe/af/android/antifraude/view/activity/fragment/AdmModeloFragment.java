@@ -16,13 +16,20 @@ import androidx.annotation.Nullable;
 import com.google.android.material.textfield.TextInputEditText;
 import com.pe.af.android.antifraude.R;
 import com.pe.af.android.antifraude.model.AdmModeloModel;
+import com.pe.af.android.antifraude.model.UsuarioModel;
 import com.pe.af.android.antifraude.view.activity.MenuActivity;
+import com.pe.af.android.data.exception.NetworkConnectionException;
 import com.pe.af.android.data.repository.AdmModeloDataRepository;
 import com.pe.af.android.data.repository.UsuarioDataRepository;
+import com.pe.af.android.domain.entity.AdmModelo;
+import com.pe.af.android.domain.entity.request.AdmModeloRequest;
+import com.pe.af.android.domain.exception.IErrorBundle;
 import com.pe.af.android.domain.repository.AdmModeloRepository;
 import com.pe.af.android.domain.repository.UsuarioRepository;
 import com.pe.af.android.domain.usecase.AdmModeloUseCase;
 import com.pe.af.android.domain.usecase.IAdmModeloUseCase;
+import com.pe.af.android.domain.usecase.IUsuarioUseCase;
+import com.pe.af.android.domain.usecase.UsuarioUseCase;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -109,6 +116,13 @@ public class AdmModeloFragment extends BaseFragment implements CompoundButton.On
             showErrorFragment(mensaje);
             return;
         }
+        AdmModeloRequest admModeloRequest = new AdmModeloRequest();
+        admModeloRequest.setCantidadPreguntas(Integer.parseInt(edt_cant_preguntas.getText().toString()));
+        admModeloRequest.setBloqueoHabilitado(ckbBloqueo.isChecked());
+        admModeloRequest.setLimiteDesaprobaciones(Integer.parseInt(edt_limite_desaprobaciones.getText().toString()));
+        admModeloRequest.setLimiteSinRespuestas(Integer.parseInt(edt_sin_repuestas.getText().toString()));
+        admModeloRequest.setHorasHabilitacion(Integer.parseInt(edt_cant_horas.getText().toString()));
+        guardarAdmModelo(admModeloRequest);
     }
 
     private String validar() {
@@ -159,49 +173,38 @@ public class AdmModeloFragment extends BaseFragment implements CompoundButton.On
     }
 
 
-    /*public void getOrdenCompraDetalleList(final OrdenCompraModel ordenCompraModel) {
-        showLoadingFragment(getResources().getString(R.string.text_obteniendo_detalle_orden_compra));
-        ListarOrdenCompraDetalleUseCase listarOrdenCompraDetalleUseCase = new ListarOrdenCompraDetalleUseCaseImpl(ordenCompraDetalleRepository);
+    public void guardarAdmModelo(final AdmModeloRequest admModeloRequest) {
+        IAdmModeloUseCase admModeloUseCase = new AdmModeloUseCase(admModeloRepository);
+        IUsuarioUseCase usuarioUseCase = new UsuarioUseCase(usuarioRepository);
 
-        ListarOrdenCompraUseCase listarOrdenCompraUseCase = new ListarOrdenCompraUseCaseImpl(ordenCompraRepository, usuarioRepository);
-        listarOrdenCompraUseCase.setOrdenCompra(OrdenCompraModelMapper.revert(ordenCompraModel));
+        ModelMapper modelMapper = new ModelMapper();
 
-        OrdenCompraDetalleRequest ordenCompraDetalleRequest = new OrdenCompraDetalleRequest();
-        ordenCompraDetalleRequest.setIdOrdenCompra(ordenCompraModel.getIdOrdenCompra());
+        Type typeUsuario = new TypeToken<UsuarioModel>() {
+        }.getType();
+        //UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), typeUsuario);
 
-        listarOrdenCompraDetalleUseCase.ejecutar(ordenCompraDetalleRequest, new ListarOrdenCompraDetalleUseCase.Callback() {
+        showLoadingFragment(getResources().getString(R.string.text_guardando_adm_modelo));
+
+        admModeloUseCase.guardarAdmModelo(/*usuario.getUsuario()*/"pvicente", admModeloRequest, new AdmModeloUseCase.Callback() {
             @Override
             public void onEnviar(String mensaje) {
                 hideLoadingFragment();
                 showCorrectFragment(mensaje);
-                navigateToOrdenCompraDetalle(context);
             }
 
             @Override
-            public void onError(ErrorBundle errorBundle) {
-                GetOrdenCompraDetalleUseCase getOrdenCompraDetalleUseCase = new GetOrdenCompraDetalleUseCaseImpl(ordenCompraDetalleRepository);
-                List<OrdenCompraDetalleModel> ordenCompraDetalleModelList = OrdenCompraDetalleModelMapper.adapter(getOrdenCompraDetalleUseCase.getOrdenCompraDetalleListPorIdOrdenCompra(ordenCompraModel.getIdOrdenCompra()));
-
-                hideLoadingFragment();
-
+            public void onError(IErrorBundle errorBundle) {
                 String mensaje = errorBundle.getErrorMessage();
 
                 if (mensaje == null || mensaje.equals("")) {
                     mensaje = errorBundle.getException().getClass().getName();
-
                     if (errorBundle.getException().getClass().isInstance(new NetworkConnectionException())) {
                         mensaje = getResources().getString(R.string.text_fuera_de_cobertura);
                     }
                 }
+                hideLoadingFragment();
                 showErrorFragment(mensaje);
-
-                if (ordenCompraDetalleModelList.size()==0){
-                    showInfoFragment(getResources().getString(R.string.text_no_existe_detalle_orden_compra));
-                }else{
-                    navigateToOrdenCompraDetalle(context);
-                }
             }
         });
-    }*/
-
+    }
 }

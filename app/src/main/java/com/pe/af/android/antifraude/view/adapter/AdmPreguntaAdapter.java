@@ -25,7 +25,7 @@ public class AdmPreguntaAdapter extends RecyclerView.Adapter<AdmPreguntaAdapter.
     private OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
-        void onAdmPreguntaItemClicked(List<AdmPreguntaModel> admPreguntaModels);
+        void onAdmPreguntaItemClicked(int position, boolean state);
     }
 
     public AdmPreguntaAdapter(Context context, List<AdmPreguntaModel> admPreguntaModelList) {
@@ -43,7 +43,7 @@ public class AdmPreguntaAdapter extends RecyclerView.Adapter<AdmPreguntaAdapter.
     }
 
     @Override
-    public void onBindViewHolder(AdmPreguntaViewHolder holder, int position) {
+    public void onBindViewHolder(AdmPreguntaViewHolder holder, final int position) {
         final AdmPreguntaModel admPreguntaModel = this.admPreguntaModelList.get(position);
         holder.ckbPregunta.setChecked(admPreguntaModel.isSeleccionada());
         holder.tvPregunta.setText(admPreguntaModel.getPregunta());
@@ -51,7 +51,7 @@ public class AdmPreguntaAdapter extends RecyclerView.Adapter<AdmPreguntaAdapter.
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(onItemClickListener != null){
-                    onItemClickListener.onAdmPreguntaItemClicked(admPreguntaModelList);
+                    onItemClickListener.onAdmPreguntaItemClicked(position, isChecked);
                 }
             }
         });

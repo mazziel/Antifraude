@@ -188,7 +188,7 @@ public class MenuPresenter {
         }.getType();
         //UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), type);
 
-        view.showloading(view.getContext().getResources().getString(R.string.text_obteniendo_adm_modelo));
+        view.showloading(view.getContext().getResources().getString(R.string.text_obteniendo_adm_pregunta));
 
         admPreguntaUseCase.obtenerAdmPregunta(/*usuario.getUsuario()*/"pvicente", new AdmPreguntaUseCase.Callback() {
             @Override
@@ -228,11 +228,11 @@ public class MenuPresenter {
     }
 
     public void cerrarSesion() {
-        IUsuarioUseCase usuarioUseCase = new UsuarioUseCase(usuarioRepository);
+        //IUsuarioUseCase usuarioUseCase = new UsuarioUseCase(usuarioRepository);
         IAdmModeloUseCase admModeloUseCase = new AdmModeloUseCase(admModeloRepository);
         IAdmPreguntaUseCase admPreguntaUseCase = new AdmPreguntaUseCase(admPreguntaRepository);
 
-        usuarioUseCase.cerrarSesion();
+        //usuarioUseCase.cerrarSesion();
         admModeloUseCase.eliminarAdmModelo();
         admPreguntaUseCase.eliminarAdmPregunta();
     }

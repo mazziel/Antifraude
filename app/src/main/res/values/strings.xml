@@ -34,4 +34,8 @@
     <string name="modelo_cant_preguntas">Ingrese un valor de 1 a 8</string>
     <string name="text_validando_usuario">Validando Usuario...</string>
     <string name="text_obteniendo_adm_modelo">Obteniendo configuración de Modelo</string>
+    <string name="modelo_info_cant_preguntas">Seleccione una cantidad igual o mayor a lo configurado.</string>
+    <string name="text_obteniendo_adm_pregunta">Obteniendo configuración de preguntas.</string>
+    <string name="text_guardando_adm_modelo">Guardando configuración de Modelo</string>
+    <string name="text_guardando_adm_pregunta">Guardando configuración de Preguntas</string>
 </resources>

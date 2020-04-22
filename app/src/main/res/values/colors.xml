@@ -30,7 +30,8 @@
     <color name="color_texto_nombre">#FF5800</color>
 
     <!--TOAST COLORS-->
-    <color name="bg_mensaje_confirmacion_correcto">#0154a0</color>
+    <color name="bg_mensaje_confirmacion_correcto">#0084ff</color>
+    <color name="bg_mensaje_confirmacion_info">#ffbc03</color>
     <color name="bg_mensaje_confirmacion_incorrecto">#e51b1e</color>
     <color name="btn_mensaje_confirmacion_correcto">#75f0f3f8</color>
 

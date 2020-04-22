@@ -39,7 +39,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_margin="@dimen/txt_big"
-            android:background="@drawable/button_ripple"
+            android:background="@drawable/button_round_corners_blue"
             android:paddingStart="@dimen/txt_big"
             android:paddingEnd="@dimen/txt_big"
             android:text="@string/btn_description_registrar"

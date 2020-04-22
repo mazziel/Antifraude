@@ -20,7 +20,7 @@ public class Url {
         SharedPreferences loSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(poContext);
 
-        String lsRuta = "https://"
+        String lsRuta = "http://"
                 + loSharedPreferences.getString(
                 poContext.getString(R.string.keypre_url),
                 ipServer) + "/";

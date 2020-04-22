@@ -115,22 +115,14 @@ public class AdmPreguntaCloudStore {
     }
 
     public interface GuardarAdmPreguntaRetroService {
-        @Headers({
-                "Content-Type: application/json",
-                "Accept: application/json"
-        })
         @POST("preguntas")
-        Call<Response<String>> guardarAdmPregunta(@Header("Authorization") String usuario,
+        Call<Response<String>> guardarAdmPregunta(@Header("username") String usuario,
                                                 @Body AdmPreguntaRequest request);
     }
 
     public interface OrdenCompraRetroService {
-        @Headers({
-                "Content-Type: application/json",
-                "Accept: application/json"
-        })
         @GET("preguntas")
-        Call<Response<AdmPreguntaResponse>> obtenerAdmPregunta(@Header("Authorization") String usuario);
+        Call<Response<AdmPreguntaResponse>> obtenerAdmPregunta(@Header("username") String usuario);
     }
 
     public interface GuardarAdmPreguntaCallback {

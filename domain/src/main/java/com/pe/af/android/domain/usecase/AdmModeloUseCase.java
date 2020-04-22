@@ -60,6 +60,7 @@ public class AdmModeloUseCase implements IAdmModeloUseCase {
         admModeloRepository.guardarAdmModelo(usuario, request, new AdmModeloRepository.GuardarAdmModeloCallback() {
             @Override
             public void onEnviado(String mensaje) {
+                admModeloRepository.eliminarAdmModelo();
                 ModelMapper modelMapper = new ModelMapper();
                 Type type = new TypeToken<AdmModelo>() {
                 }.getType();

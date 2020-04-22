@@ -126,7 +126,7 @@
                         android:id="@+id/login_btn_ingresar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/button_ripple"
+                        android:background="@drawable/button_round_corners_blue"
                         android:layout_marginTop="25dp"
                         android:text="@string/login_description_btn_iniciar"
                         android:textColor="@color/color_white"

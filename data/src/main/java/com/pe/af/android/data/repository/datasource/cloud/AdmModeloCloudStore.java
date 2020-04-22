@@ -116,18 +116,14 @@ public class AdmModeloCloudStore {
     }
 
     public interface GuardarAdmModeloRetroService {
-        @Headers({
-                "Content-Type: application/json",
-                "Accept: application/json"
-        })
         @POST("modelo")
-        Call<Response<String>> guardarAdmModelo(@Header("Authorization") String usuario,
+        Call<Response<String>> guardarAdmModelo(@Header("username") String usuario,
                                                 @Body AdmModeloRequest request);
     }
 
     public interface ObtenerAdmModeloRetroService {
         @GET("modelo")
-        Call<Response<AdmModeloResponse>> obtenerAdmModelo(@Header("Authorization") String usuario);
+        Call<Response<AdmModeloResponse>> obtenerAdmModelo(@Header("username") String usuario);
     }
 
     public interface GuardarAdmModeloCallback {
