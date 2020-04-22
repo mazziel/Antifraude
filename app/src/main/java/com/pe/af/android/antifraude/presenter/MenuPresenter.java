@@ -113,19 +113,7 @@ public class MenuPresenter {
     }
 
     public void buscarAdmModelo(final FragmentManager fragmentManager, final int position) {
-
-        IAdmModeloUseCase admModeloUseCase = new AdmModeloUseCase(admModeloRepository);
-        ModelMapper modelMapper = new ModelMapper();
-
-        Type type = new TypeToken<AdmModeloModel>() {
-        }.getType();
-        if (admModeloUseCase.obtenerAdmModelo() != null) {
-            admModeloModel = modelMapper.map(admModeloUseCase.obtenerAdmModelo(), type);
-            setFragment(fragmentManager, position);
-        } else {
-            obtenerAdmModelo(fragmentManager, position);
-        }
-
+        obtenerAdmModelo(fragmentManager, position);
     }
 
     private void obtenerAdmModelo(final FragmentManager fragmentManager, final int position) {
@@ -159,24 +147,23 @@ public class MenuPresenter {
                 }
                 view.hideloading();
                 view.showError(mensaje);
+
+                IAdmModeloUseCase admModeloUseCase = new AdmModeloUseCase(admModeloRepository);
+                ModelMapper modelMapper = new ModelMapper();
+
+                Type type = new TypeToken<AdmModeloModel>() {
+                }.getType();
+
+                if (admModeloUseCase.obtenerAdmModelo() != null) {
+                    admModeloModel = modelMapper.map(admModeloUseCase.obtenerAdmModelo(), type);
+                    setFragment(fragmentManager, position);
+                }
             }
         });
     }
 
     public void buscarAdmPreguntas(final FragmentManager fragmentManager, final int position) {
-
-        IAdmPreguntaUseCase admPreguntaUseCase = new AdmPreguntaUseCase(admPreguntaRepository);
-        ModelMapper modelMapper = new ModelMapper();
-
-        Type type = new TypeToken<List<AdmPreguntaModel>>() {
-        }.getType();
-
-        if (admPreguntaUseCase.obtenerListAdmPregunta().size()>0) {
-            admPreguntaModelList = modelMapper.map(admPreguntaUseCase.obtenerListAdmPregunta(), type);
-            setFragment(fragmentManager, position);
-        } else {
-            obtenerAdmPregunta(fragmentManager, position);
-        }
+        obtenerAdmPregunta(fragmentManager, position);
     }
 
     private void obtenerAdmPregunta(final FragmentManager fragmentManager, final int position) {
@@ -210,6 +197,17 @@ public class MenuPresenter {
                 }
                 view.hideloading();
                 view.showError(mensaje);
+
+                IAdmPreguntaUseCase admPreguntaUseCase = new AdmPreguntaUseCase(admPreguntaRepository);
+                ModelMapper modelMapper = new ModelMapper();
+
+                Type type = new TypeToken<List<AdmPreguntaModel>>() {
+                }.getType();
+
+                if (admPreguntaUseCase.obtenerListAdmPregunta().size()>0) {
+                    admPreguntaModelList = modelMapper.map(admPreguntaUseCase.obtenerListAdmPregunta(), type);
+                    setFragment(fragmentManager, position);
+                }
             }
         });
     }
