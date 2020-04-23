@@ -2,9 +2,10 @@ package com.pe.af.android.domain.entity.response;
 
 public class UsuarioResponse {
     private String idUsuario;
-    private String nombres;
-    private String apellidos;
-    private String correo;
+    private String nombre;
+    /*private String apellidos;
+    private String correo;*/
+    private String clave;
 
     public String getIdUsuario() {
         return idUsuario;
@@ -14,27 +15,19 @@ public class UsuarioResponse {
         this.idUsuario = idUsuario;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getClave() {
+        return clave;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 }

@@ -119,30 +119,36 @@ public class AdmPreguntasFragment extends BaseFragment implements View.OnClickLi
                     @Override
                     public void onAdmPreguntaItemClicked(int position, boolean state) {
                         listaPregunta.get(position).setSeleccionada(state);
-                        cont = 0;
-
-                        for (AdmPreguntaModel admPreguntaModel : listaPregunta) {
-                            if (admPreguntaModel.isSeleccionada()) {
-                                cont++;
-                            }
-                        }
-                        if (cont < admModeloModel.getCantidadPreguntas()) {
-                            btn_registrar_modelo.setEnabled(false);
-                            btn_registrar_modelo.setBackground(getResources().getDrawable(R.drawable.button_round_corners_grey));
-
-                            showInfoFragment(getResources().getString(R.string.modelo_info_cant_preguntas));
-                            return;
-                        }
-                        btn_registrar_modelo.setEnabled(true);
-                        btn_registrar_modelo.setBackground(getResources().getDrawable(R.drawable.button_round_corners_blue));
+                        refrescarList();
                     }
                 });
                 rc_pregunta.setAdapter(admPreguntaAdapter);
+                refrescarList();
             }
         } else {
             llNoResultados.setVisibility(View.VISIBLE);
         }
     }
+
+    private void refrescarList() {
+        cont = 0;
+
+        for (AdmPreguntaModel admPreguntaModel : listaPregunta) {
+            if (admPreguntaModel.isSeleccionada()) {
+                cont++;
+            }
+        }
+        if (cont < admModeloModel.getCantidadPreguntas()) {
+            btn_registrar_modelo.setEnabled(false);
+            btn_registrar_modelo.setBackground(getResources().getDrawable(R.drawable.button_round_corners_grey));
+
+            showInfoFragment(getResources().getString(R.string.modelo_info_cant_preguntas));
+            return;
+        }
+        btn_registrar_modelo.setEnabled(true);
+        btn_registrar_modelo.setBackground(getResources().getDrawable(R.drawable.button_round_corners_blue));
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -168,11 +174,11 @@ public class AdmPreguntasFragment extends BaseFragment implements View.OnClickLi
 
         Type typeUsuario = new TypeToken<UsuarioModel>() {
         }.getType();
-        //UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), typeUsuario);
+        UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), typeUsuario);
 
         showLoadingFragment(getResources().getString(R.string.text_guardando_adm_pregunta));
 
-        admPreguntaUseCase.guardarAdmPregunta(/*usuario.getUsuario()*/"pvicente", admPreguntaRequest, new AdmPreguntaUseCase.Callback() {
+        admPreguntaUseCase.guardarAdmPregunta(usuario.getNombre(), admPreguntaRequest, new AdmPreguntaUseCase.Callback() {
             @Override
             public void onEnviar(String mensaje) {
                 hideLoadingFragment();

@@ -57,8 +57,8 @@ public class MenuPresenter {
 
         Type type = new TypeToken<UsuarioModel>() {
         }.getType();
-        //UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), type);
-        //view.actualizarDatos(usuario);
+        UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), type);
+        view.actualizarDatos(usuario);
     }
 
     public void setupNavigationDrawerContent(NavigationView navigationView, final DrawerLayout drawerLayout, final FragmentManager fragmentManager) {
@@ -99,14 +99,14 @@ public class MenuPresenter {
         switch (position) {
             case 0:
                 fragmentTransaction = fragmentManager.beginTransaction();
-                AdmModeloFragment ordenCompraFragment = new AdmModeloFragment();
-                fragmentTransaction.replace(R.id.fragment, ordenCompraFragment);
+                AdmModeloFragment admModeloFragment = new AdmModeloFragment();
+                fragmentTransaction.replace(R.id.fragment, admModeloFragment);
                 fragmentTransaction.commitAllowingStateLoss();
                 break;
             case 1:
                 fragmentTransaction = fragmentManager.beginTransaction();
-                AdmPreguntasFragment pendienteFragment = new AdmPreguntasFragment();
-                fragmentTransaction.replace(R.id.fragment, pendienteFragment);
+                AdmPreguntasFragment admPreguntasFragment = new AdmPreguntasFragment();
+                fragmentTransaction.replace(R.id.fragment, admPreguntasFragment);
                 fragmentTransaction.commitAllowingStateLoss();
                 break;
         }
@@ -123,11 +123,11 @@ public class MenuPresenter {
 
         Type type = new TypeToken<UsuarioModel>() {
         }.getType();
-        //UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), type);
+        UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), type);
 
         view.showloading(view.getContext().getResources().getString(R.string.text_obteniendo_adm_modelo));
 
-        admModeloUseCase.obtenerAdmModelo(/*usuario.getUsuario()*/"pvicente", new AdmModeloUseCase.Callback() {
+        admModeloUseCase.obtenerAdmModelo(usuario.getNombre(), new AdmModeloUseCase.Callback() {
             @Override
             public void onEnviar(String mensaje) {
                 view.hideloading();
@@ -173,11 +173,11 @@ public class MenuPresenter {
 
         Type type = new TypeToken<UsuarioModel>() {
         }.getType();
-        //UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), type);
+        UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), type);
 
         view.showloading(view.getContext().getResources().getString(R.string.text_obteniendo_adm_pregunta));
 
-        admPreguntaUseCase.obtenerAdmPregunta(/*usuario.getUsuario()*/"pvicente", new AdmPreguntaUseCase.Callback() {
+        admPreguntaUseCase.obtenerAdmPregunta(usuario.getNombre(), new AdmPreguntaUseCase.Callback() {
             @Override
             public void onEnviar(String mensaje) {
                 view.hideloading();
@@ -226,11 +226,11 @@ public class MenuPresenter {
     }
 
     public void cerrarSesion() {
-        //IUsuarioUseCase usuarioUseCase = new UsuarioUseCase(usuarioRepository);
+        IUsuarioUseCase usuarioUseCase = new UsuarioUseCase(usuarioRepository);
         IAdmModeloUseCase admModeloUseCase = new AdmModeloUseCase(admModeloRepository);
         IAdmPreguntaUseCase admPreguntaUseCase = new AdmPreguntaUseCase(admPreguntaRepository);
 
-        //usuarioUseCase.cerrarSesion();
+        usuarioUseCase.cerrarSesion();
         admModeloUseCase.eliminarAdmModelo();
         admPreguntaUseCase.eliminarAdmPregunta();
     }

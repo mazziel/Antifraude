@@ -17,11 +17,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Header;
 import retrofit2.http.Body;
-import retrofit2.http.Headers;
-import retrofit2.http.POST;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
 
 public class AdmModeloCloudStore {
     final Context context;
@@ -116,13 +115,13 @@ public class AdmModeloCloudStore {
     }
 
     public interface GuardarAdmModeloRetroService {
-        @POST("modelo")
+        @POST("administracion/modelo")
         Call<Response<String>> guardarAdmModelo(@Header("username") String usuario,
                                                 @Body AdmModeloRequest request);
     }
 
     public interface ObtenerAdmModeloRetroService {
-        @GET("modelo")
+        @GET("administracion/modelo")
         Call<Response<AdmModeloResponse>> obtenerAdmModelo(@Header("username") String usuario);
     }
 

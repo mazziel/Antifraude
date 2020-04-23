@@ -50,7 +50,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center_vertical"
-                    android:textSize="@dimen/txt_medium"
+                    android:textSize="@dimen/txt_big"
+                    android:textStyle="bold"
                     android:fontFamily="@string/font_family_medium"
                     android:textColor="@android:color/white"
                     android:hint="@string/menu_hint_name"
@@ -66,7 +67,8 @@
                     android:fontFamily="@string/font_family_medium"
                     android:textSize="@dimen/txt_medium"
                     android:hint="@string/menu_hint_lastname"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:visibility="gone"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -74,7 +76,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
             <TextView
                 android:id="@+id/email"
                 android:layout_width="match_parent"

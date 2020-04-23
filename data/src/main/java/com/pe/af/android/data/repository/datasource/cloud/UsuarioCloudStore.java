@@ -17,6 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -37,7 +38,7 @@ public class UsuarioCloudStore {
         if(UtilitarioData.isThereInternetConnection(context)){
             UsuarioRetroService service = retrofit.create(UsuarioRetroService.class);
 
-            Call<Response<UsuarioResponse>> repos = service.validarUsuario(usuarioRequest);
+            Call<Response<UsuarioResponse>> repos = service.validarUsuario(usuarioRequest.getUsuario(), usuarioRequest.getContrasena());
             Log.v("URL Obtenida",repos.request().url().toString());
 
             repos.enqueue(new Callback<Response<UsuarioResponse>>() {
@@ -54,9 +55,11 @@ public class UsuarioCloudStore {
                             if (respuesta.getCode() == Response.CODE_OK) {
                                 Usuario usuario = new Usuario();
                                 usuario.setIdUsuario(respuesta.getPayLoad().getIdUsuario());
-                                usuario.setNombres(respuesta.getPayLoad().getNombres());
+                                usuario.setNombre(respuesta.getPayLoad().getNombre());
+                                usuario.setClave(respuesta.getPayLoad().getClave());
+                                /*usuario.setNombres(respuesta.getPayLoad().getNombres());
                                 usuario.setApellidos(respuesta.getPayLoad().getApellidos());
-                                usuario.setCorreo(respuesta.getPayLoad().getCorreo());
+                                usuario.setCorreo(respuesta.getPayLoad().getCorreo());*/
                                 validarUsuarioCallback.onValidar(respuesta.getMessage(), usuario);
                             } else if (respuesta.getCode() == Response.CODE_ERROR) {
                                 validarUsuarioCallback.onError(new Exception(respuesta.getMessage()));
@@ -83,12 +86,8 @@ public class UsuarioCloudStore {
     }
 
     public interface UsuarioRetroService {
-        @Headers({
-                "Content-Type: application/json",
-                "Accept: application/json"
-        })
-        @POST("opLogin")
-        Call<Response<UsuarioResponse>> validarUsuario(@Body UsuarioRequest request);
+        @POST("seguridad/autenticacion")
+        Call<Response<UsuarioResponse>> validarUsuario(@Header("username") String usuario, @Header("password") String clave);
     }
 
     public interface ValidarUsuarioCallback{

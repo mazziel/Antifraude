@@ -6,8 +6,10 @@ import com.pe.af.android.antifraude.R;
 import com.pe.af.android.antifraude.model.UsuarioModel;
 import com.pe.af.android.antifraude.util.UtilitarioApp;
 import com.pe.af.android.antifraude.view.LoginView;
+import com.pe.af.android.data.exception.NetworkConnectionException;
 import com.pe.af.android.data.repository.UsuarioDataRepository;
 import com.pe.af.android.domain.entity.request.UsuarioRequest;
+import com.pe.af.android.domain.exception.IErrorBundle;
 import com.pe.af.android.domain.repository.UsuarioRepository;
 import com.pe.af.android.domain.usecase.IUsuarioUseCase;
 import com.pe.af.android.domain.usecase.UsuarioUseCase;
@@ -38,13 +40,13 @@ public class LoginPresenter {
         }.getType();
         if (usuarioUseCase.obtenerUsuario() != null) {
             UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), type);
-            view.actualizarUsuario(usuario.getUsuario(), usuario.getContrasena());
+            view.actualizarUsuario(usuario.getNombre(), usuario.getClave());
         }
     }
 
     public void validarUsuario(UsuarioRequest usuarioRequest) {
 
-        /*if (!isExportarBD(usuarioRequest)) {
+        if (!isExportarBD(usuarioRequest)) {
             UsuarioRepository usuarioRepository = new UsuarioDataRepository(view.getContext());
             IUsuarioUseCase usuarioUseCase = new UsuarioUseCase(usuarioRepository);
 
@@ -74,12 +76,11 @@ public class LoginPresenter {
                     iniciarSesionSinSenal();
                 }
             });
-        }*/
-        iniciarSesionSinSenal();
+        }
     }
 
     private void iniciarSesionSinSenal() {
-        /*UsuarioRepository usuarioRepository = new UsuarioDataRepository(view.getContext());
+        UsuarioRepository usuarioRepository = new UsuarioDataRepository(view.getContext());
         IUsuarioUseCase usuarioUseCase = new UsuarioUseCase(usuarioRepository);
         ModelMapper modelMapper = new ModelMapper();
 
@@ -88,11 +89,10 @@ public class LoginPresenter {
         UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), type);
 
         if(usuario!=null) {
-            if(usuario.getUsuario()!=null) {
-                view.iniciarSesionSinSenal(usuario.getUsuario(), usuario.getContrasena());
+            if(usuario.getNombre()!=null) {
+                view.iniciarSesionSinSenal(usuario.getNombre(), usuario.getClave());
             }
-        }*/
-        view.iniciarSesionSinSenal("aaaa", "aaaa");
+        }
     }
 
     public void irMenuSinSenal() {

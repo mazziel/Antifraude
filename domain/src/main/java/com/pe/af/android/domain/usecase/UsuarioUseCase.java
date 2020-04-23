@@ -37,8 +37,8 @@ public class UsuarioUseCase implements IUsuarioUseCase {
                 @Override
                 public void onValidado(String mensaje, Usuario usuario) {
                     usuarioRepository.eliminarUsuario();
-                    usuario.setUsuario(usuarioRequest.getUsuario());
-                    usuario.setContrasena(usuarioRequest.getContrasena());
+                    /*usuario.setNombre(usuarioRequest.getUsuario());
+                    usuario.setClave(usuarioRequest.getContrasena());*/
                     usuarioRepository.guardarUsuario(usuario);
                     callback.onValidado(mensaje);
                 }

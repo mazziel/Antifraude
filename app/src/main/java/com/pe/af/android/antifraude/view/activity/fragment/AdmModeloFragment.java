@@ -181,11 +181,11 @@ public class AdmModeloFragment extends BaseFragment implements CompoundButton.On
 
         Type typeUsuario = new TypeToken<UsuarioModel>() {
         }.getType();
-        //UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), typeUsuario);
+        UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), typeUsuario);
 
         showLoadingFragment(getResources().getString(R.string.text_guardando_adm_modelo));
 
-        admModeloUseCase.guardarAdmModelo(/*usuario.getUsuario()*/"pvicente", admModeloRequest, new AdmModeloUseCase.Callback() {
+        admModeloUseCase.guardarAdmModelo(usuario.getNombre(), admModeloRequest, new AdmModeloUseCase.Callback() {
             @Override
             public void onEnviar(String mensaje) {
                 hideLoadingFragment();

@@ -87,11 +87,11 @@ public class MenuActivity extends BaseActivity implements MenuView {
         View headerView = navigationView.getHeaderView(0);
 
         TextView name =  headerView.findViewById(R.id.name);
-        name.setText(usuarioModel.getNombres());
+        name.setText(usuarioModel.getNombre());
         TextView lastname = headerView.findViewById(R.id.lastname);
-        lastname.setText(usuarioModel.getApellidos());
+        lastname.setText(usuarioModel.getNombre());
         TextView email = headerView.findViewById(R.id.email);
-        email.setText(usuarioModel.getCorreo());
+        email.setText(usuarioModel.getNombre());
     }
 
     @Override

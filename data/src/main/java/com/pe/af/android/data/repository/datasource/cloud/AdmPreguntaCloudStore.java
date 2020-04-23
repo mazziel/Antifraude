@@ -115,13 +115,13 @@ public class AdmPreguntaCloudStore {
     }
 
     public interface GuardarAdmPreguntaRetroService {
-        @POST("preguntas")
+        @POST("administracion/preguntas")
         Call<Response<String>> guardarAdmPregunta(@Header("username") String usuario,
                                                 @Body AdmPreguntaRequest request);
     }
 
     public interface OrdenCompraRetroService {
-        @GET("preguntas")
+        @GET("administracion/preguntas")
         Call<Response<AdmPreguntaResponse>> obtenerAdmPregunta(@Header("username") String usuario);
     }
 
