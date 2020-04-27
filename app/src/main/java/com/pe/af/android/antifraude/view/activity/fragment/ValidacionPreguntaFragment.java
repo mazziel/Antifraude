@@ -8,53 +8,64 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pe.af.android.antifraude.R;
-import com.pe.af.android.antifraude.model.AdmModeloModel;
-import com.pe.af.android.antifraude.model.AdmPreguntaModel;
+import com.pe.af.android.antifraude.model.IdentidadModel;
+import com.pe.af.android.antifraude.model.OpcionModel;
+import com.pe.af.android.antifraude.model.PreguntaModel;
 import com.pe.af.android.antifraude.model.UsuarioModel;
 import com.pe.af.android.antifraude.view.activity.MenuActivity;
-import com.pe.af.android.antifraude.view.adapter.AdmPreguntaAdapter;
 import com.pe.af.android.antifraude.view.adapter.ListaLayoutManager;
+import com.pe.af.android.antifraude.view.adapter.PreguntaAdapter;
 import com.pe.af.android.data.exception.NetworkConnectionException;
 import com.pe.af.android.data.repository.AdmModeloDataRepository;
 import com.pe.af.android.data.repository.AdmPreguntaDataRepository;
+import com.pe.af.android.data.repository.IdentidadDataRepository;
 import com.pe.af.android.data.repository.UsuarioDataRepository;
+import com.pe.af.android.domain.entity.Pregunta;
 import com.pe.af.android.domain.entity.request.AdmPreguntaRequest;
 import com.pe.af.android.domain.exception.IErrorBundle;
 import com.pe.af.android.domain.repository.AdmModeloRepository;
 import com.pe.af.android.domain.repository.AdmPreguntaRepository;
+import com.pe.af.android.domain.repository.IdentidadRepository;
 import com.pe.af.android.domain.repository.UsuarioRepository;
-import com.pe.af.android.domain.usecase.AdmModeloUseCase;
 import com.pe.af.android.domain.usecase.AdmPreguntaUseCase;
-import com.pe.af.android.domain.usecase.IAdmModeloUseCase;
 import com.pe.af.android.domain.usecase.IAdmPreguntaUseCase;
+import com.pe.af.android.domain.usecase.IIdentidadUseCase;
 import com.pe.af.android.domain.usecase.IUsuarioUseCase;
+import com.pe.af.android.domain.usecase.IdentidadUseCase;
 import com.pe.af.android.domain.usecase.UsuarioUseCase;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
-public class AdmPreguntasFragment extends BaseFragment implements View.OnClickListener {
+public class ValidacionPreguntaFragment extends BaseFragment implements View.OnClickListener {
 
     private Context context;
     private AdmModeloRepository admModeloRepository;
+    private IdentidadRepository identidadRepository;
     private AdmPreguntaRepository admPreguntaRepository;
     private UsuarioRepository usuarioRepository;
     private ListaLayoutManager listaLayoutManager;
-    private AdmPreguntaAdapter admPreguntaAdapter;
+    private PreguntaAdapter preguntaAdapter;
+    private TextView tv_documento_consultado;
+    private TextView tv_nombre_completo;
+    private TextView tv_estado;
+    private TextView tv_operacion;
     private RelativeLayout ry_pregunta;
     private LinearLayout ly_noresultados;
     private RecyclerView rc_pregunta;
-    private Button btn_registrar_modelo;
-    private List<AdmPreguntaModel> listaPregunta;
-    private AdmModeloModel admModeloModel;
+    private Button btn_continuar;
+    private List<PreguntaModel> preguntaModels;
+    private IdentidadModel identidadModel;
     private int cont;
 
     @Nullable
@@ -62,11 +73,12 @@ public class AdmPreguntasFragment extends BaseFragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_adm_preguntas, container, false);
+        final View view = inflater.inflate(R.layout.fragment_validacion_pregunta, container, false);
         setHasOptionsMenu(true);
 
         context = ((MenuActivity) getActivity());
         admModeloRepository = new AdmModeloDataRepository(context);
+        identidadRepository = new IdentidadDataRepository(context);
         admPreguntaRepository = new AdmPreguntaDataRepository(context);
         usuarioRepository = new UsuarioDataRepository(context);
 
@@ -74,12 +86,16 @@ public class AdmPreguntasFragment extends BaseFragment implements View.OnClickLi
         ((MenuActivity) getActivity()).getSupportActionBar().getThemedContext();
 
 
+        tv_documento_consultado = (TextView) view.findViewById(R.id.tv_documento_consultado);
+        tv_nombre_completo = (TextView) view.findViewById(R.id.tv_nombre_completo);
+        tv_estado = (TextView) view.findViewById(R.id.tv_estado);
+        tv_operacion = (TextView) view.findViewById(R.id.tv_operacion);
         rc_pregunta = (RecyclerView) view.findViewById(R.id.rc_pregunta);
-        btn_registrar_modelo = (Button) view.findViewById(R.id.btn_registrar_modelo);
+        btn_continuar = (Button) view.findViewById(R.id.btn_continuar);
         ry_pregunta = view.findViewById(R.id.ry_pregunta);
         ly_noresultados = view.findViewById(R.id.ly_noresultados);
 
-        btn_registrar_modelo.setOnClickListener(this);
+        btn_continuar.setOnClickListener(this);
 
         getViews();
         inicializarVista();
@@ -93,42 +109,61 @@ public class AdmPreguntasFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void inicializarVista() {
-        btn_registrar_modelo.setEnabled(false);
-        btn_registrar_modelo.setBackground(getResources().getDrawable(R.drawable.button_round_corners_grey));
+        btn_continuar.setEnabled(false);
+        btn_continuar.setBackground(getResources().getDrawable(R.drawable.button_round_corners_grey));
 
-        IAdmModeloUseCase admModeloUseCase = new AdmModeloUseCase(admModeloRepository);
-        IAdmPreguntaUseCase admPreguntaUseCase = new AdmPreguntaUseCase(admPreguntaRepository);
+        IIdentidadUseCase identidadUseCase = new IdentidadUseCase(identidadRepository);
         ModelMapper modelMapper = new ModelMapper();
 
-        Type typeModelo = new TypeToken<AdmModeloModel>() {
+        Type typeIdentidad = new TypeToken<IdentidadModel>() {
         }.getType();
-        Type typePregunta = new TypeToken<List<AdmPreguntaModel>>() {
+        Type typePregunta = new TypeToken<List<PreguntaModel>>() {
         }.getType();
-        admModeloModel = modelMapper.map(admModeloUseCase.obtenerAdmModelo(), typeModelo);
-        listaPregunta = modelMapper.map(admPreguntaUseCase.obtenerListAdmPregunta(), typePregunta);
 
-        actualizarList(listaPregunta);
+        identidadModel = modelMapper.map(identidadUseCase.obtenerIdentidad(), typeIdentidad);
+        List<Pregunta> preguntaList = identidadUseCase.obtenerListPregunta();
+        preguntaModels = modelMapper.map(preguntaList, typePregunta);
+        for (int i = 0; i < preguntaList.size(); i++) {
+            Pregunta item = preguntaList.get(i);
+            preguntaModels.get(i).setOpciones(item.getOpciones());
+
+            List<OpcionModel> alternativas = new ArrayList<>();
+            for (String key : item.getOpciones().keySet()) {
+                OpcionModel op = new OpcionModel();
+                op.setOpcion(key);
+                op.setEstado(false);
+                alternativas.add(op);
+            }
+            preguntaModels.get(i).setAlternativas(alternativas);
+        }
+
+        tv_documento_consultado.setText(identidadModel.getNroDocumento());
+        tv_nombre_completo.setText(identidadModel.getPersona());
+        tv_estado.setText(identidadModel.getEstado());
+        tv_operacion.setText(identidadModel.getTransaccion());
+
+        actualizarList(preguntaModels);
     }
 
-    public void actualizarList(List<AdmPreguntaModel> lista) {
+    public void actualizarList(List<PreguntaModel> lista) {
         if (!lista.isEmpty()) {
             ry_pregunta.setVisibility(View.VISIBLE);
             ly_noresultados.setVisibility(View.GONE);
             if (rc_pregunta != null) {
-                if (admPreguntaAdapter == null) {
-                    admPreguntaAdapter = new AdmPreguntaAdapter(context, lista);
+                if (preguntaAdapter == null) {
+                    preguntaAdapter = new PreguntaAdapter(lista);
                 } else {
-                    admPreguntaAdapter.setAdmPreguntaList(lista);
+                    preguntaAdapter.setPreguntaList(lista);
                 }
-                admPreguntaAdapter.setOnItemClickListener(new AdmPreguntaAdapter.OnItemClickListener() {
+                /*preguntaAdapter.setOnItemClickListener(new AdmPreguntaAdapter.OnItemClickListener() {
                     @Override
                     public void onAdmPreguntaItemClicked(int position, boolean state) {
                         listaPregunta.get(position).setSeleccionada(state);
                         refrescarList();
                     }
-                });
-                rc_pregunta.setAdapter(admPreguntaAdapter);
-                refrescarList();
+                });*/
+                rc_pregunta.setAdapter(preguntaAdapter);
+                //refrescarList();
             }
         } else {
             ry_pregunta.setVisibility(View.GONE);
@@ -136,7 +171,7 @@ public class AdmPreguntasFragment extends BaseFragment implements View.OnClickLi
         }
     }
 
-    private void refrescarList() {
+    /*private void refrescarList() {
         cont = 0;
 
         for (AdmPreguntaModel admPreguntaModel : listaPregunta) {
@@ -145,20 +180,20 @@ public class AdmPreguntasFragment extends BaseFragment implements View.OnClickLi
             }
         }
         if (cont < admModeloModel.getCantidadPreguntas()) {
-            btn_registrar_modelo.setEnabled(false);
-            btn_registrar_modelo.setBackground(getResources().getDrawable(R.drawable.button_round_corners_grey));
+            btn_continuar.setEnabled(false);
+            btn_continuar.setBackground(getResources().getDrawable(R.drawable.button_round_corners_grey));
 
             showInfoFragment(getResources().getString(R.string.modelo_info_cant_preguntas));
             return;
         }
-        btn_registrar_modelo.setEnabled(true);
-        btn_registrar_modelo.setBackground(getResources().getDrawable(R.drawable.button_round_corners_blue));
-    }
+        btn_continuar.setEnabled(true);
+        btn_continuar.setBackground(getResources().getDrawable(R.drawable.button_round_corners_blue));
+    }*/
 
 
     @Override
     public void onClick(View v) {
-        AdmPreguntaRequest admPreguntaRequest = new AdmPreguntaRequest();
+        /*AdmPreguntaRequest admPreguntaRequest = new AdmPreguntaRequest();
         int[] nroPregunta = new int[cont];
         int count = 0;
         for (AdmPreguntaModel admPreguntaModel: listaPregunta){
@@ -167,8 +202,8 @@ public class AdmPreguntasFragment extends BaseFragment implements View.OnClickLi
                 count++;
             }
         }
-        admPreguntaRequest.setPreguntasSeleccionadas(nroPregunta);
-        guardarAdmPregunta(admPreguntaRequest);
+        admPreguntaRequest.setPreguntasSeleccionadas(nroPregunta);*/
+        //guardarAdmPregunta(admPreguntaRequest);
 
     }
 

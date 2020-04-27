@@ -40,7 +40,7 @@ public class LoginPresenter {
         }.getType();
         if (usuarioUseCase.obtenerUsuario() != null) {
             UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), type);
-            view.actualizarUsuario(usuario.getNombre(), usuario.getClave());
+            view.actualizarUsuario(usuario.getUsuario(), usuario.getContrasenia());
         }
     }
 
@@ -89,8 +89,8 @@ public class LoginPresenter {
         UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), type);
 
         if(usuario!=null) {
-            if(usuario.getNombre()!=null) {
-                view.iniciarSesionSinSenal(usuario.getNombre(), usuario.getClave());
+            if(usuario.getUsuario()!=null) {
+                view.iniciarSesionSinSenal(usuario.getUsuario(), usuario.getContrasenia());
             }
         }
     }

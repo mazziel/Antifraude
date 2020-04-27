@@ -3,47 +3,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/navigation_drawer_header_margin"
+    android:background="@android:color/white"
     android:orientation="vertical"
-    android:background="@android:color/white">
+    android:padding="@dimen/navigation_drawer_header_margin">
 
     <RelativeLayout
         android:id="@+id/ry_pregunta"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_titulo"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ly_cabecera"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/pregunta_descripcion_titulo"
-            android:textSize="@dimen/lv_row_text_size_detail_medium" />
+            android:layout_alignParentTop="true">
+
+            <include layout="@layout/cabecera_resumen" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_pregunta"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/btn_registrar_modelo"
-            android:layout_below="@+id/tv_titulo"
-            android:layout_marginTop="@dimen/txt_big"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:listSelector="@android:color/transparent"
-            android:stretchMode="columnWidth"
-            tools:listitem="@layout/adm_pregunta_item" />
+            android:layout_above="@+id/btn_continuar"
+            android:layout_below="@+id/ly_cabecera"
+            tools:listitem="@layout/pregunta_item" />
 
         <Button
-            android:id="@+id/btn_registrar_modelo"
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_continuar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/txt_big"
+            android:layout_marginTop="25dp"
             android:background="@drawable/button_round_corners_blue"
-            android:paddingStart="@dimen/txt_big"
-            android:paddingEnd="@dimen/txt_big"
-            android:text="@string/btn_description_registrar"
+            android:text="@string/btn_description_continuar"
             android:textColor="@color/color_white"
             android:textSize="@dimen/txt_large" />
     </RelativeLayout>

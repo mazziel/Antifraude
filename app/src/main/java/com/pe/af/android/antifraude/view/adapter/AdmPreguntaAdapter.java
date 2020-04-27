@@ -85,7 +85,6 @@ public class AdmPreguntaAdapter extends RecyclerView.Adapter<AdmPreguntaAdapter.
         this.validateAdmPreguntaList(admPreguntaModelList);
         this.admPreguntaModelList = admPreguntaModelList;
         this.notifyDataSetChanged();
-
     }
 
     static class AdmPreguntaViewHolder extends RecyclerView.ViewHolder {

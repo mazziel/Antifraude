@@ -16,9 +16,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public class UsuarioCloudStore {
@@ -34,12 +32,12 @@ public class UsuarioCloudStore {
                 .build();
     }
 
-    public void validarUsuario(UsuarioRequest usuarioRequest, final ValidarUsuarioCallback validarUsuarioCallback){
-        if(UtilitarioData.isThereInternetConnection(context)){
+    public void validarUsuario(UsuarioRequest usuarioRequest, final ValidarUsuarioCallback validarUsuarioCallback) {
+        if (UtilitarioData.isThereInternetConnection(context)) {
             UsuarioRetroService service = retrofit.create(UsuarioRetroService.class);
 
             Call<Response<UsuarioResponse>> repos = service.validarUsuario(usuarioRequest.getUsuario(), usuarioRequest.getContrasena());
-            Log.v("URL Obtenida",repos.request().url().toString());
+            Log.v("URL Obtenida", repos.request().url().toString());
 
             repos.enqueue(new Callback<Response<UsuarioResponse>>() {
                 @Override
@@ -54,12 +52,10 @@ public class UsuarioCloudStore {
 
                             if (respuesta.getCode() == Response.CODE_OK) {
                                 Usuario usuario = new Usuario();
-                                usuario.setIdUsuario(respuesta.getPayLoad().getIdUsuario());
-                                usuario.setNombre(respuesta.getPayLoad().getNombre());
-                                usuario.setClave(respuesta.getPayLoad().getClave());
-                                /*usuario.setNombres(respuesta.getPayLoad().getNombres());
-                                usuario.setApellidos(respuesta.getPayLoad().getApellidos());
-                                usuario.setCorreo(respuesta.getPayLoad().getCorreo());*/
+                                usuario.setPerfil(respuesta.getPayLoad().getPerfil());
+                                usuario.setCliente(respuesta.getPayLoad().getCliente());
+                                usuario.setEmail(respuesta.getPayLoad().getEmail());
+                                usuario.setNombreUsuario(respuesta.getPayLoad().getNombreUsuario());
                                 validarUsuarioCallback.onValidar(respuesta.getMessage(), usuario);
                             } else if (respuesta.getCode() == Response.CODE_ERROR) {
                                 validarUsuarioCallback.onError(new Exception(respuesta.getMessage()));
@@ -69,18 +65,17 @@ public class UsuarioCloudStore {
                             validarUsuarioCallback.onError(e);
                         }
 
-                    }else{
+                    } else {
                         validarUsuarioCallback.onError(new Exception(response.message()));
                     }
                 }
+
                 @Override
                 public void onFailure(Call<Response<UsuarioResponse>> call, Throwable t) {
                     validarUsuarioCallback.onError(new Exception(t.getMessage()));
                 }
             });
-
-
-        }else{
+        } else {
             validarUsuarioCallback.onError(new NetworkConnectionException("Fuera de cobertura"));
         }
     }
@@ -90,10 +85,10 @@ public class UsuarioCloudStore {
         Call<Response<UsuarioResponse>> validarUsuario(@Header("username") String usuario, @Header("password") String clave);
     }
 
-    public interface ValidarUsuarioCallback{
+    public interface ValidarUsuarioCallback {
         void onValidar(String mensaje, Usuario usuario);
-        void onError(Exception e);
 
+        void onError(Exception e);
 
 
     }

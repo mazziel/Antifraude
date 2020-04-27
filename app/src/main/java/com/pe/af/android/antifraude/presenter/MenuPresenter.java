@@ -15,19 +15,26 @@ import com.pe.af.android.antifraude.model.UsuarioModel;
 import com.pe.af.android.antifraude.view.MenuView;
 import com.pe.af.android.antifraude.view.activity.fragment.AdmModeloFragment;
 import com.pe.af.android.antifraude.view.activity.fragment.AdmPreguntasFragment;
+import com.pe.af.android.antifraude.view.activity.fragment.ValidacionIdentidadFragment;
+import com.pe.af.android.antifraude.view.activity.fragment.ValidacionPreguntaFragment;
 import com.pe.af.android.data.exception.NetworkConnectionException;
 import com.pe.af.android.data.repository.AdmModeloDataRepository;
 import com.pe.af.android.data.repository.AdmPreguntaDataRepository;
+import com.pe.af.android.data.repository.IdentidadDataRepository;
 import com.pe.af.android.data.repository.UsuarioDataRepository;
+import com.pe.af.android.domain.entity.request.IdentidadRequest;
 import com.pe.af.android.domain.exception.IErrorBundle;
 import com.pe.af.android.domain.repository.AdmModeloRepository;
 import com.pe.af.android.domain.repository.AdmPreguntaRepository;
+import com.pe.af.android.domain.repository.IdentidadRepository;
 import com.pe.af.android.domain.repository.UsuarioRepository;
 import com.pe.af.android.domain.usecase.AdmModeloUseCase;
 import com.pe.af.android.domain.usecase.AdmPreguntaUseCase;
 import com.pe.af.android.domain.usecase.IAdmModeloUseCase;
 import com.pe.af.android.domain.usecase.IAdmPreguntaUseCase;
+import com.pe.af.android.domain.usecase.IIdentidadUseCase;
 import com.pe.af.android.domain.usecase.IUsuarioUseCase;
+import com.pe.af.android.domain.usecase.IdentidadUseCase;
 import com.pe.af.android.domain.usecase.UsuarioUseCase;
 
 import org.modelmapper.ModelMapper;
@@ -41,6 +48,7 @@ public class MenuPresenter {
     final UsuarioRepository usuarioRepository;
     final AdmModeloRepository admModeloRepository;
     final AdmPreguntaRepository admPreguntaRepository;
+    final IdentidadRepository identidadRepository;
     private AdmModeloModel admModeloModel;
     private List<AdmPreguntaModel> admPreguntaModelList;
 
@@ -49,6 +57,7 @@ public class MenuPresenter {
         usuarioRepository = new UsuarioDataRepository(view.getContext());
         admModeloRepository = new AdmModeloDataRepository(view.getContext());
         admPreguntaRepository = new AdmPreguntaDataRepository(view.getContext());
+        identidadRepository = new IdentidadDataRepository(view.getContext());
     }
 
     public void iniciar() {
@@ -79,7 +88,7 @@ public class MenuPresenter {
                                 return true;
                             case R.id.item_validacion_identidad:
                                 menuItem.setChecked(true);
-                                irValidacionIdentidad(fragmentManager, 1);
+                                irValidacionIdentidad(fragmentManager, 2);
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.item_salir:
@@ -109,6 +118,18 @@ public class MenuPresenter {
                 fragmentTransaction.replace(R.id.fragment, admPreguntasFragment);
                 fragmentTransaction.commitAllowingStateLoss();
                 break;
+            case 2:
+                fragmentTransaction = fragmentManager.beginTransaction();
+                ValidacionIdentidadFragment validacionIdentidadFragment = new ValidacionIdentidadFragment();
+                fragmentTransaction.replace(R.id.fragment, validacionIdentidadFragment);
+                fragmentTransaction.commitAllowingStateLoss();
+                break;
+            case 3:
+                fragmentTransaction = fragmentManager.beginTransaction();
+                ValidacionPreguntaFragment validacionPreguntaFragment = new ValidacionPreguntaFragment();
+                fragmentTransaction.replace(R.id.fragment, validacionPreguntaFragment);
+                fragmentTransaction.commitAllowingStateLoss();
+                break;
         }
     }
 
@@ -127,7 +148,7 @@ public class MenuPresenter {
 
         view.showloading(view.getContext().getResources().getString(R.string.text_obteniendo_adm_modelo));
 
-        admModeloUseCase.obtenerAdmModelo(usuario.getNombre(), new AdmModeloUseCase.Callback() {
+        admModeloUseCase.obtenerAdmModelo(usuario.getUsuario(), new AdmModeloUseCase.Callback() {
             @Override
             public void onEnviar(String mensaje) {
                 view.hideloading();
@@ -177,7 +198,7 @@ public class MenuPresenter {
 
         view.showloading(view.getContext().getResources().getString(R.string.text_obteniendo_adm_pregunta));
 
-        admPreguntaUseCase.obtenerAdmPregunta(usuario.getNombre(), new AdmPreguntaUseCase.Callback() {
+        admPreguntaUseCase.obtenerAdmPregunta(usuario.getUsuario(), new AdmPreguntaUseCase.Callback() {
             @Override
             public void onEnviar(String mensaje) {
                 view.hideloading();
@@ -204,7 +225,7 @@ public class MenuPresenter {
                 Type type = new TypeToken<List<AdmPreguntaModel>>() {
                 }.getType();
 
-                if (admPreguntaUseCase.obtenerListAdmPregunta().size()>0) {
+                if (admPreguntaUseCase.obtenerListAdmPregunta().size() > 0) {
                     admPreguntaModelList = modelMapper.map(admPreguntaUseCase.obtenerListAdmPregunta(), type);
                     setFragment(fragmentManager, position);
                 }
@@ -213,16 +234,43 @@ public class MenuPresenter {
     }
 
     public void irValidacionIdentidad(final FragmentManager fragmentManager, final int position) {
-        /*view.showloading(view.getContext().getResources().getString(R.string.text_obteniendo_ordenes_compra_pendientes));
-        GetOrdenCompraUseCase getOrdenCompraUseCase = new GetOrdenCompraUseCaseImpl(ordenCompraRepository);
-        List<OrdenCompraModel> ordenCompraModelList = OrdenCompraModelMapper.adapter(getOrdenCompraUseCase.getOrdenCompraList("", ""));
-        view.hideloading();
+        setFragment(fragmentManager, position);
+    }
 
-        if (ordenCompraModelList.size()==0){
-            view.showInfo(view.getContext().getResources().getString(R.string.text_no_existen_ordenes_compra_pendientes));
-        }else{
-            setFragment(fragmentManager, position);
-        }*/
+    public void validarIdentidad(final FragmentManager fragmentManager, final int position, IdentidadRequest identidadRequest) {
+        IIdentidadUseCase identidadUseCase = new IdentidadUseCase(identidadRepository);
+        IUsuarioUseCase usuarioUseCase = new UsuarioUseCase(usuarioRepository);
+
+        ModelMapper modelMapper = new ModelMapper();
+
+        Type typeUsuario = new TypeToken<UsuarioModel>() {
+        }.getType();
+        UsuarioModel usuario = modelMapper.map(usuarioUseCase.obtenerUsuario(), typeUsuario);
+
+        view.showCorrect(view.getContext().getResources().getString(R.string.text_validando_identidad));
+
+        identidadUseCase.ejecutar(usuario.getUsuario(), identidadRequest, new IdentidadUseCase.Callback() {
+            @Override
+            public void onValidado(String mensaje) {
+                view.hideloading();
+                view.showCorrect(mensaje);
+                setFragment(fragmentManager, position);
+            }
+
+            @Override
+            public void onError(IErrorBundle errorBundle) {
+                String mensaje = errorBundle.getErrorMessage();
+
+                if (mensaje == null || mensaje.equals("")) {
+                    mensaje = errorBundle.getException().getClass().getName();
+                    if (errorBundle.getException().getClass().isInstance(new NetworkConnectionException())) {
+                        mensaje = view.getContext().getResources().getString(R.string.text_fuera_de_cobertura);
+                    }
+                }
+                view.hideloading();
+                view.showError(mensaje);
+            }
+        });
     }
 
     public void cerrarSesion() {

@@ -185,7 +185,7 @@ public class AdmModeloFragment extends BaseFragment implements CompoundButton.On
 
         showLoadingFragment(getResources().getString(R.string.text_guardando_adm_modelo));
 
-        admModeloUseCase.guardarAdmModelo(usuario.getNombre(), admModeloRequest, new AdmModeloUseCase.Callback() {
+        admModeloUseCase.guardarAdmModelo(usuario.getUsuario(), admModeloRequest, new AdmModeloUseCase.Callback() {
             @Override
             public void onEnviar(String mensaje) {
                 hideLoadingFragment();

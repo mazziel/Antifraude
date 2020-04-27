@@ -21,7 +21,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public class AdmPreguntaCloudStore {
@@ -117,7 +116,7 @@ public class AdmPreguntaCloudStore {
     public interface GuardarAdmPreguntaRetroService {
         @POST("administracion/preguntas")
         Call<Response<String>> guardarAdmPregunta(@Header("username") String usuario,
-                                                @Body AdmPreguntaRequest request);
+                                                  @Body AdmPreguntaRequest request);
     }
 
     public interface OrdenCompraRetroService {

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:elevation="0dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="horizontal"
+    app:cardElevation="0dp"
+    tools:ignore="UseCompoundDrawables">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_opcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/txt_big"
+            android:textColor="@color/color_grey"
+            android:textSize="@dimen/lv_row_text_size_detail_xmedium" />
+
+        <TextView
+            android:id="@+id/tv_opcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/lv_row_padding"
+            android:maxLines="3"
+            android:text="sssssss"
+            android:textColor="@color/color_grey"
+            android:textSize="@dimen/lv_row_text_size_detail_xmedium"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

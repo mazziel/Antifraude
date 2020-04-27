@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/validacion_descripcion_titulo"
+        android:textSize="@dimen/lv_row_text_size"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/txt_big" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/lv_row_text_size_detail_small"
+        android:text="@string/validacion_descripcion_tipo_documento"
+        android:textColor="@color/color_grey"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/sp_tipo_documento"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_view_end_margin_left"
+        android:background="@color/color_grey_1"
+        android:entries="@array/tipoDocumento"
+        android:spinnerMode="dropdown" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/txt_big" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/lv_row_text_size_detail_small"
+        android:text="@string/validacion_descripcion_nro_documento"
+        android:textColor="@color/color_grey"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edt_nro_documento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="12"
+        android:maxLines="1"
+        android:textSize="@dimen/lv_row_text_size_detail_small" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/txt_big" />
+
+    <Button
+        android:id="@+id/btn_continuar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/txt_big"
+        android:background="@drawable/button_round_corners_blue"
+        android:paddingStart="@dimen/txt_big"
+        android:paddingEnd="@dimen/txt_big"
+        android:text="@string/btn_description_continuar"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/txt_large" />
+
+
+</LinearLayout>

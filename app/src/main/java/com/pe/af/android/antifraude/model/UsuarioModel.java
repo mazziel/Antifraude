@@ -1,43 +1,58 @@
 package com.pe.af.android.antifraude.model;
 
 public class UsuarioModel {
-    private String id;
-    private String idUsuario;
-    /*private String usuario;*/
-    private String nombre;
-    /*private String apellidos;
-    private String correo;*/
-    private String clave;
+    private String perfil;
+    private String cliente;
+    private String nombreUsuario;
+    private String email;
+    private String usuario;
+    private String contrasenia;
 
-    public String getId() {
-        return id;
+    public String getPerfil() {
+        return perfil;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
     }
 
-    public String getIdUsuario() {
-        return idUsuario;
+    public String getCliente() {
+        return cliente;
     }
 
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
-    public String getClave() {
-        return clave;
+    public String getEmail() {
+        return email;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 }

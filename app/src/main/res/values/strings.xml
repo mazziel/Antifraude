@@ -38,4 +38,19 @@
     <string name="text_obteniendo_adm_pregunta">Obteniendo configuración de preguntas.</string>
     <string name="text_guardando_adm_modelo">Guardando configuración de Modelo</string>
     <string name="text_guardando_adm_pregunta">Guardando configuración de Preguntas</string>
+    <string name="validacion_descripcion_titulo">Registro de datos</string>
+    <string name="validacion_descripcion_nro_documento">Número de documento:</string>
+    <string name="validacion_descripcion_tipo_documento">Tipo de documento:</string>
+    <string name="btn_description_continuar">Continuar</string>
+    <string name="validacion_descripcion_documento_consultado">"Documento consultado: "</string>
+    <string name="validacion_descripcion_nombre_completo">"Nombre completo de la Persona: "</string>
+    <string name="validacion_descripcion_estado">"Estado: "</string>
+    <string name="validacion_descripcion_operacion">"Operación: "</string>
+    <string name="text_validando_identidad">Validando identidad</string>
+    <array name="tipoDocumento">
+        <item>seleccione</item>
+        <item>DNI</item>
+        <item>CE</item>
+    </array>
+
 </resources>

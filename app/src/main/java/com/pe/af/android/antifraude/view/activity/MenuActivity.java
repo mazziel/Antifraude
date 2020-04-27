@@ -20,11 +20,13 @@ import com.pe.af.android.antifraude.R;
 import com.pe.af.android.antifraude.model.UsuarioModel;
 import com.pe.af.android.antifraude.presenter.MenuPresenter;
 import com.pe.af.android.antifraude.view.MenuView;
+import com.pe.af.android.antifraude.view.activity.fragment.ValidacionIdentidadFragment;
+import com.pe.af.android.domain.entity.request.IdentidadRequest;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MenuActivity extends BaseActivity implements MenuView {
+public class MenuActivity extends BaseActivity implements MenuView, ValidacionIdentidadFragment.OnItemClickListener {
 
     MenuPresenter presenter;
 
@@ -87,11 +89,11 @@ public class MenuActivity extends BaseActivity implements MenuView {
         View headerView = navigationView.getHeaderView(0);
 
         TextView name =  headerView.findViewById(R.id.name);
-        name.setText(usuarioModel.getNombre());
+        name.setText(usuarioModel.getUsuario());
         TextView lastname = headerView.findViewById(R.id.lastname);
-        lastname.setText(usuarioModel.getNombre());
+        lastname.setText(usuarioModel.getNombreUsuario());
         TextView email = headerView.findViewById(R.id.email);
-        email.setText(usuarioModel.getNombre());
+        email.setText(usuarioModel.getEmail());
     }
 
     @Override
@@ -123,5 +125,11 @@ public class MenuActivity extends BaseActivity implements MenuView {
 
     public static Intent getCallingIntent(Context context){
         return new Intent(context,MenuActivity.class);
+    }
+
+    @Override
+    public void onClickValidacionIdentidad(IdentidadRequest identidadRequest) {
+        showCorrect("recibio request");
+        presenter.validarIdentidad(fragmentManager, 3, identidadRequest);
     }
 }
