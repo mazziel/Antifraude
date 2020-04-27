@@ -21,12 +21,14 @@ import com.pe.af.android.antifraude.model.UsuarioModel;
 import com.pe.af.android.antifraude.presenter.MenuPresenter;
 import com.pe.af.android.antifraude.view.MenuView;
 import com.pe.af.android.antifraude.view.activity.fragment.ValidacionIdentidadFragment;
+import com.pe.af.android.antifraude.view.activity.fragment.ValidacionPreguntaFragment;
+import com.pe.af.android.antifraude.view.adapter.PreguntaSubItemAdapter;
 import com.pe.af.android.domain.entity.request.IdentidadRequest;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MenuActivity extends BaseActivity implements MenuView, ValidacionIdentidadFragment.OnItemClickListener {
+public class MenuActivity extends BaseActivity implements MenuView, ValidacionIdentidadFragment.OnItemClickListener, ValidacionPreguntaFragment.OnItemClickListener {
 
     MenuPresenter presenter;
 
@@ -129,7 +131,11 @@ public class MenuActivity extends BaseActivity implements MenuView, ValidacionId
 
     @Override
     public void onClickValidacionIdentidad(IdentidadRequest identidadRequest) {
-        showCorrect("recibio request");
         presenter.validarIdentidad(fragmentManager, 3, identidadRequest);
+    }
+
+    @Override
+    public void onClickNuevaConsulta(int position) {
+        presenter.irValidacionIdentidad(fragmentManager, position);
     }
 }

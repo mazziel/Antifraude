@@ -47,6 +47,7 @@
     <string name="validacion_descripcion_estado">"Estado: "</string>
     <string name="validacion_descripcion_operacion">"Operación: "</string>
     <string name="text_validando_identidad">Validando identidad</string>
+    <string name="btn_description_nuevo_consulta">Nueva Consulta</string>
     <array name="tipoDocumento">
         <item>seleccione</item>
         <item>DNI</item>

@@ -8,7 +8,6 @@
     android:padding="@dimen/navigation_drawer_header_margin">
 
     <RelativeLayout
-        android:id="@+id/ry_pregunta"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -40,17 +39,4 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/txt_large" />
     </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/ly_noresultados"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="@string/pregunta_sin_resultados" />
-    </LinearLayout>
 </LinearLayout>

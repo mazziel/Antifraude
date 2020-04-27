@@ -60,13 +60,12 @@ public class ValidacionPreguntaFragment extends BaseFragment implements View.OnC
     private TextView tv_nombre_completo;
     private TextView tv_estado;
     private TextView tv_operacion;
-    private RelativeLayout ry_pregunta;
-    private LinearLayout ly_noresultados;
+    private LinearLayout ly_nombre_completo;
     private RecyclerView rc_pregunta;
     private Button btn_continuar;
     private List<PreguntaModel> preguntaModels;
     private IdentidadModel identidadModel;
-    private int cont;
+    private OnItemClickListener onItemClickListener;
 
     @Nullable
     @Override
@@ -92,8 +91,7 @@ public class ValidacionPreguntaFragment extends BaseFragment implements View.OnC
         tv_operacion = (TextView) view.findViewById(R.id.tv_operacion);
         rc_pregunta = (RecyclerView) view.findViewById(R.id.rc_pregunta);
         btn_continuar = (Button) view.findViewById(R.id.btn_continuar);
-        ry_pregunta = view.findViewById(R.id.ry_pregunta);
-        ly_noresultados = view.findViewById(R.id.ly_noresultados);
+        ly_nombre_completo = view.findViewById(R.id.ly_nombre_completo);
 
         btn_continuar.setOnClickListener(this);
 
@@ -109,9 +107,6 @@ public class ValidacionPreguntaFragment extends BaseFragment implements View.OnC
     }
 
     private void inicializarVista() {
-        btn_continuar.setEnabled(false);
-        btn_continuar.setBackground(getResources().getDrawable(R.drawable.button_round_corners_grey));
-
         IIdentidadUseCase identidadUseCase = new IdentidadUseCase(identidadRepository);
         ModelMapper modelMapper = new ModelMapper();
 
@@ -122,19 +117,21 @@ public class ValidacionPreguntaFragment extends BaseFragment implements View.OnC
 
         identidadModel = modelMapper.map(identidadUseCase.obtenerIdentidad(), typeIdentidad);
         List<Pregunta> preguntaList = identidadUseCase.obtenerListPregunta();
-        preguntaModels = modelMapper.map(preguntaList, typePregunta);
-        for (int i = 0; i < preguntaList.size(); i++) {
-            Pregunta item = preguntaList.get(i);
-            preguntaModels.get(i).setOpciones(item.getOpciones());
+        if (preguntaList!=null) {
+            preguntaModels = modelMapper.map(preguntaList, typePregunta);
+            for (int i = 0; i < preguntaList.size(); i++) {
+                Pregunta item = preguntaList.get(i);
+                preguntaModels.get(i).setOpciones(item.getOpciones());
 
-            List<OpcionModel> alternativas = new ArrayList<>();
-            for (String key : item.getOpciones().keySet()) {
-                OpcionModel op = new OpcionModel();
-                op.setOpcion(key);
-                op.setEstado(false);
-                alternativas.add(op);
+                List<OpcionModel> alternativas = new ArrayList<>();
+                for (String key : item.getOpciones().keySet()) {
+                    OpcionModel op = new OpcionModel();
+                    op.setOpcion(key);
+                    op.setEstado(false);
+                    alternativas.add(op);
+                }
+                preguntaModels.get(i).setAlternativas(alternativas);
             }
-            preguntaModels.get(i).setAlternativas(alternativas);
         }
 
         tv_documento_consultado.setText(identidadModel.getNroDocumento());
@@ -146,9 +143,10 @@ public class ValidacionPreguntaFragment extends BaseFragment implements View.OnC
     }
 
     public void actualizarList(List<PreguntaModel> lista) {
-        if (!lista.isEmpty()) {
-            ry_pregunta.setVisibility(View.VISIBLE);
-            ly_noresultados.setVisibility(View.GONE);
+        if (lista != null && !lista.isEmpty()) {
+            ly_nombre_completo.setVisibility(View.VISIBLE);
+            rc_pregunta.setVisibility(View.VISIBLE);
+            btn_continuar.setText(getContext().getResources().getString(R.string.btn_description_continuar));
             if (rc_pregunta != null) {
                 if (preguntaAdapter == null) {
                     preguntaAdapter = new PreguntaAdapter(lista);
@@ -166,8 +164,9 @@ public class ValidacionPreguntaFragment extends BaseFragment implements View.OnC
                 //refrescarList();
             }
         } else {
-            ry_pregunta.setVisibility(View.GONE);
-            ly_noresultados.setVisibility(View.VISIBLE);
+            ly_nombre_completo.setVisibility(View.GONE);
+            rc_pregunta.setVisibility(View.GONE);
+            btn_continuar.setText(getContext().getResources().getString(R.string.btn_description_nuevo_consulta));
         }
     }
 
@@ -193,6 +192,11 @@ public class ValidacionPreguntaFragment extends BaseFragment implements View.OnC
 
     @Override
     public void onClick(View v) {
+        if (preguntaModels==null){
+            onItemClickListener.onClickNuevaConsulta(2);
+            return;
+        }
+        showCorrectFragment("Procesando");
         /*AdmPreguntaRequest admPreguntaRequest = new AdmPreguntaRequest();
         int[] nroPregunta = new int[cont];
         int count = 0;
@@ -205,6 +209,10 @@ public class ValidacionPreguntaFragment extends BaseFragment implements View.OnC
         admPreguntaRequest.setPreguntasSeleccionadas(nroPregunta);*/
         //guardarAdmPregunta(admPreguntaRequest);
 
+    }
+
+    public interface OnItemClickListener {
+        void onClickNuevaConsulta(int position);
     }
 
     public void guardarAdmPregunta(final AdmPreguntaRequest admPreguntaRequest) {
@@ -240,5 +248,12 @@ public class ValidacionPreguntaFragment extends BaseFragment implements View.OnC
                 showErrorFragment(mensaje);
             }
         });
+    }
+
+    //Override this function as below to set fragmentInterfacer
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        onItemClickListener = (OnItemClickListener) context;
     }
 }

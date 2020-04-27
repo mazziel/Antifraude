@@ -43,7 +43,9 @@ public class IdentidadUseCase implements IIdentidadUseCase {
                     identidadRepository.eliminarListPregunta();
                     identidad.setNroDocumento(identidadRequest.getNroDocumento());
                     identidadRepository.guardarIdentidad(identidad);
-                    identidadRepository.guardarListPregunta(list);
+                    if (list!=null) {
+                        identidadRepository.guardarListPregunta(list);
+                    }
                     callback.onValidado(mensaje);
                 }
 

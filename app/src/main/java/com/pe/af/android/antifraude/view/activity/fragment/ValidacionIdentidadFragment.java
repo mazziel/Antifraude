@@ -70,10 +70,6 @@ public class ValidacionIdentidadFragment extends BaseFragment implements View.On
         void onClickValidacionIdentidad(IdentidadRequest identidadRequest);
     }
 
-    /*public void setOnItemClickListener (OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }*/
-
     @Override
     public void onClick(View v) {
         String mensaje = validar();
